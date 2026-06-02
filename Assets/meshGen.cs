@@ -26,7 +26,7 @@ public class MeshGenerator : MonoBehaviour
     void CreateShape()
     {
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-    
+
 
         for (int i = 0, z = 0; z <= zSize; z++)
         {
