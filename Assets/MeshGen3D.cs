@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,8 +17,13 @@ public class MeshGen3D : MonoBehaviour
     public int xSize = 10;
     public int zSize = 10;
     public int ySize = 10;
+    public int threshold = 128;
 
-    public float strength = 0.3f;
+    public byte vertIntensity = 0;
+
+
+
+    // public float strength = 0.3f;
 
     void Start()
     {
@@ -40,7 +46,7 @@ public class MeshGen3D : MonoBehaviour
                 for (int y = 0; y <= ySize; y++)
                 {
                     vertices[i] = new Vector3(x, y, z);
-                    verticesState[i] = Mathf.PerlinNoise(x * strength, z * strength) * 2f;
+                    verticesState[i] = (Mathf.PerlinNoise(x, y) * 2f) * 256;
                     i++;
                 }
             }
@@ -68,9 +74,11 @@ public class MeshGen3D : MonoBehaviour
         }
         for (int i = 0; i < verticesState.Length; i++)
         {
-            if (verticesState[i] > 0.8f)
+            if (verticesState[i] > threshold)
             {
-                Gizmos.color = new UnityEngine.Color32((byte)0, (byte)0, (byte)(verticesState[i] * 256), (byte)255);
+
+                byte vertIntensity = (byte)verticesState[i];
+                Gizmos.color = new UnityEngine.Color32(255, 0, 0, 255);
                 Gizmos.DrawSphere(vertices[i], .1f);
             }
         }

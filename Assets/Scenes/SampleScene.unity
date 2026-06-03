@@ -465,7 +465,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeshGen3D
   xSize: 20
   zSize: 20
-  ySize: 20
+  ySize: 0
+  threshold: 128
+  vertColor: 0
   strength: 0.3
 --- !u!23 &1268236880
 MeshRenderer:
