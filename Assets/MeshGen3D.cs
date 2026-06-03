@@ -23,6 +23,7 @@ public class MeshGen3D : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         CreateShape();
+        UpdateMesh();
 
     }
 
@@ -40,10 +41,17 @@ public class MeshGen3D : MonoBehaviour
                     i++;
                 }
             }
-
         }
+    }
 
+    void UpdateMesh()
+    {
+        mesh.Clear();
 
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+
+        mesh.RecalculateNormals();
     }
 
 
@@ -51,7 +59,6 @@ public class MeshGen3D : MonoBehaviour
     {
         if (vertices == null)
         {
-            print("vertices == null");
             return;
 
         }
