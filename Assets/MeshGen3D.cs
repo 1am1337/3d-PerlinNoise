@@ -17,9 +17,16 @@ public class MeshGen3D : MonoBehaviour
     public int xSize = 10;
     public int zSize = 10;
     public int ySize = 10;
-    public int threshold = 128;
 
-    public byte vertIntensity = 0;
+    public int threshold = 128;
+    public float freq = 2.0;
+    public float amp = 1.0;
+    public float persistence = 0.2;
+    public int oct = 3;
+    public int seed = 0;
+
+
+    //byte vertIntensity = 0;
 
 
 
@@ -39,17 +46,19 @@ public class MeshGen3D : MonoBehaviour
     {
         vertices = new Vector3[(xSize + 1) * (ySize + 1) * (zSize + 1)];
         verticesState = new float[vertices.Length];
-        for (int i = 0, z = 0; z <= zSize; z++)
+        float z = 0;
+        for (int i = 0; z <= zSize; z++)
         {
-            for (int x = 0; x <= xSize; x++)
+            for (float x = 0; x <= xSize; x++)
             {
-                for (int y = 0; y <= ySize; y++)
+                for (float y = 0; y <= ySize; y++)
                 {
                     vertices[i] = new Vector3(x, y, z);
-                    verticesState[i] = (Mathf.PerlinNoise(x, y) * 2f) * 256;
+                    verticesState[i] = PerlinGen.perlin.PerlinGen3D(x, y, z, freq, amp, persistence, oct, seed);
                     i++;
                 }
             }
+
         }
 
     }
