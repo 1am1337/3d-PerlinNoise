@@ -33,6 +33,10 @@ public class MeshGen3D : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         CreateShape();
+        for (int i = 0; i < verticesState.Length; i++)
+        {
+            print(verticesState[i]);
+        }
         //UpdateMesh();
 
     }
@@ -40,7 +44,7 @@ public class MeshGen3D : MonoBehaviour
     void CreateShape()
     {
         vertices = new Vector3[(xSize + 1) * (ySize + 1) * (zSize + 1)];
-        verticesState = new float[vertices.Length];
+        verticesState = new float[(xSize + 1) * (ySize + 1) * (zSize + 1)];
         int i = 0;
         for (float x = 0; x <= zSize; x++)
         {
@@ -49,7 +53,7 @@ public class MeshGen3D : MonoBehaviour
                 for (float z = 0; z <= ySize; z++)
                 {
                     vertices[i] = new Vector3(x, y, z);
-                    verticesState[i] = Perlin.Gen.D3(x: x, y: y, z: z);
+                    verticesState[i] = Perlin.Noise.Gen3D(x: x, y: y, z: z);
                     i++;
                 }
             }

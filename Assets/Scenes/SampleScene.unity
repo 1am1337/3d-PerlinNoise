@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c0592a37d454fb4bba3d0bac928331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeshGen3D
-  xSize: 10
+  xSize: 1
   zSize: 10
   ySize: 10
 --- !u!23 &1268236880
