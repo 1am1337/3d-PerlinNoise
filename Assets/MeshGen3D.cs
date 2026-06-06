@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -36,7 +33,7 @@ public class MeshGen3D : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         CreateShape();
-        UpdateMesh();
+        //UpdateMesh();
 
     }
 
@@ -45,14 +42,14 @@ public class MeshGen3D : MonoBehaviour
         vertices = new Vector3[(xSize + 1) * (ySize + 1) * (zSize + 1)];
         verticesState = new float[vertices.Length];
         int i = 0;
-        for (float z = 0; z <= zSize; z++)
+        for (float x = 0; x <= zSize; x++)
         {
-            for (float x = 0; x <= xSize; x++)
+            for (float y = 0; y <= xSize; y++)
             {
-                for (float y = 0; y <= ySize; y++)
+                for (float z = 0; z <= ySize; z++)
                 {
                     vertices[i] = new Vector3(x, y, z);
-                    verticesState[i] = PerlinGen.Perlin.PerlinGen3D(x, y, z) * 256;
+                    verticesState[i] = Perlin.Gen.D3(x: x, y: y, z: z);
                     i++;
                 }
             }
@@ -84,7 +81,7 @@ public class MeshGen3D : MonoBehaviour
         for (int i = 0; i < verticesState.Length; i++)
         {
             // byte vertIntensity = ;
-            Gizmos.color = new UnityEngine.Color32((byte)verticesState[i], 0, 0, (byte)255);
+            Gizmos.color = new Color(verticesState[i], 0f, 0f, 1f);
             Gizmos.DrawSphere(vertices[i], .1f);
         }
     }
