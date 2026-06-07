@@ -14,7 +14,10 @@ public class MeshGen3D : MonoBehaviour
     public int zSize = 10;
     public int ySize = 10;
 
-    //public int threshold = 128;
+    public float threshold = 0.5f;
+    public float noiseScale = 0.2f;
+
+
     // public float freq = 2.0f;
     // public float amp = 1.0f;
     // public float persistence = 0.2f;
@@ -22,21 +25,11 @@ public class MeshGen3D : MonoBehaviour
     // public int seed = 0;
 
 
-    //byte vertIntensity = 0;
-
-
-
-    // public float strength = 0.3f;
-
     void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         CreateShape();
-        for (int i = 0; i < verticesState.Length; i++)
-        {
-            print(verticesState[i]);
-        }
         //UpdateMesh();
 
     }
@@ -46,19 +39,20 @@ public class MeshGen3D : MonoBehaviour
         vertices = new Vector3[(xSize + 1) * (ySize + 1) * (zSize + 1)];
         verticesState = new float[(xSize + 1) * (ySize + 1) * (zSize + 1)];
         int i = 0;
-        for (float x = 0; x <= zSize; x++)
+        for (int x = 0; x <= zSize; x++)
         {
-            for (float y = 0; y <= xSize; y++)
+            for (int y = 0; y <= xSize; y++)
             {
-                for (float z = 0; z <= ySize; z++)
+                for (int z = 0; z <= ySize; z++)
                 {
                     vertices[i] = new Vector3(x, y, z);
-                    verticesState[i] = Perlin.Noise.Gen3D(x: x, y: y, z: z);
+                    verticesState[i] = Perlin.Noise.Gen3D(x, y, z, noiseScale);
                     i++;
                 }
             }
 
         }
+
 
 
     }
@@ -84,9 +78,11 @@ public class MeshGen3D : MonoBehaviour
         }
         for (int i = 0; i < verticesState.Length; i++)
         {
-            // byte vertIntensity = ;
-            Gizmos.color = new Color(verticesState[i], 0f, 0f, 1f);
-            Gizmos.DrawSphere(vertices[i], .1f);
+            if (verticesState[i] >= threshold)
+            {
+                Gizmos.color = new Color(verticesState[i], 0f, 0f, 1f);
+                Gizmos.DrawSphere(vertices[i], .1f);
+            }
         }
     }
 }

@@ -463,9 +463,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c0592a37d454fb4bba3d0bac928331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeshGen3D
-  xSize: 1
+  xSize: 10
   zSize: 10
   ySize: 10
+  threshold: 0.5
+  noiseScale: 0.2
 --- !u!23 &1268236880
 MeshRenderer:
   m_ObjectHideFlags: 0
