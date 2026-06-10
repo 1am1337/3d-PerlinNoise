@@ -1,5 +1,7 @@
 using UnityEngine;
-
+using static System.Array;
+using System;
+using System.Text;
 
 // Axes are:
 //
@@ -32,6 +34,9 @@ public class MeshGen3D : MonoBehaviour
     int[] triangles;
     int[] cubePoints;
 
+
+    private string activeCorners;
+    private int indexCorners;
 
     public int xSize = 10;
     public int zSize = 10;
@@ -79,20 +84,34 @@ public class MeshGen3D : MonoBehaviour
     void GetEdges(int x, int y, int z)
     {
         cubePoints = new int[8];
-        cubePoints[0] = System.Array.IndexOf(vertices, new Vector3(x, y, z));
-        cubePoints[1] = System.Array.IndexOf(vertices, new Vector3(x + 1, y, z));
-        cubePoints[2] = System.Array.IndexOf(vertices, new Vector3(x, y + 1, z));
-        cubePoints[3] = System.Array.IndexOf(vertices, new Vector3(x + 1, y + 1, z));
-        cubePoints[4] = System.Array.IndexOf(vertices, new Vector3(x, y, z + 1));
-        cubePoints[5] = System.Array.IndexOf(vertices, new Vector3(x + 1, y, z + 1));
-        cubePoints[6] = System.Array.IndexOf(vertices, new Vector3(x, y + 1, z + 1));
-        cubePoints[7] = System.Array.IndexOf(vertices, new Vector3(x + 1, y + 1, z + 1));
+        activeCorners = string.Empty;
+        cubePoints[0] = IndexOf(vertices, new Vector3(x, y, z));
+        cubePoints[1] = IndexOf(vertices, new Vector3(x + 1, y, z));
+        cubePoints[2] = IndexOf(vertices, new Vector3(x, y + 1, z));
+        cubePoints[3] = IndexOf(vertices, new Vector3(x + 1, y + 1, z));
+        cubePoints[4] = IndexOf(vertices, new Vector3(x, y, z + 1));
+        cubePoints[5] = IndexOf(vertices, new Vector3(x + 1, y, z + 1));
+        cubePoints[6] = IndexOf(vertices, new Vector3(x, y + 1, z + 1));
+        cubePoints[7] = IndexOf(vertices, new Vector3(x + 1, y + 1, z + 1));
 
         for (int i = 0; i < cubePoints.Length; i++)
         {
-            print(cubePoints[i]);
+            if (verticesState[cubePoints[i]] > threshold)
+            {
+                activeCorners += "1";
+            }
+            else
+            {
+                activeCorners += "0";
+            }
         }
-        // return Edges;
+        print(activeCorners);
+        indexCorners = Convert.ToInt32(activeCorners, 2);
+        print(indexCorners);
+        for (int i = 0; i < TLT.CL.LT[indexCorners].Length; i++)
+        {
+            print(TLT.CL.LT[indexCorners][i]);
+        }
     }
 
     void UpdateMesh()

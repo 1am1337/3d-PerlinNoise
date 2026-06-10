@@ -1,8 +1,9 @@
 using UnityEngine;
-
-public static class CubeLookup
+namespace TLT
 {
-    public static readonly int[][] TriangleConnectionTable = {
+    public static class CL
+    {
+        public static readonly int[][] LT = {
         new int[] { -1 },
         new int[] { 0, 3, 8, -1 },
         new int[] { 0, 9, 1, -1 },
@@ -260,4 +261,5 @@ public static class CubeLookup
         new int[] { 8, 3, 0, -1 },
         new int[] { -1 },
     };
+    }
 }
