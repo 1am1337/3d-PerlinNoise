@@ -35,11 +35,12 @@ public class MeshGen3D : MonoBehaviour
 
     private int[] triangles;
     private int[] cubePoints;
-    private int[] edgesToConnect;
+
+    // public static List<int> edgesToConnect = new List<int>();
 
     private string activeCorners;
     private int indexCorners;
-    public static List<int> trianglesList = new List<int>();
+    public List<int> trianglesList = new List<int>();
     public int xSize = 10;
     public int zSize = 10;
     public int ySize = 10;
@@ -96,8 +97,8 @@ public class MeshGen3D : MonoBehaviour
                     cubePoints[6] = IndexOf(vertices, new Vector3(x, y + 1, z + 1));
                     cubePoints[7] = IndexOf(vertices, new Vector3(x + 1, y + 1, z + 1));
 
-                    for (int j = 0; j < cubePoints.Length; j++)
-                    {
+                     for (int j = 0; j < cubePoints.Length; j++)
+                     {
                         if (verticesState[cubePoints[j]] > threshold)
                         {
                             activeCorners += "1";
@@ -109,22 +110,15 @@ public class MeshGen3D : MonoBehaviour
                     }
                     // print(activeCorners);
                     indexCorners = Convert.ToInt32(activeCorners, 2);
-                    edgesToConnect = new int[TLT.CL.LT[indexCorners].Length];
-                    edgesToConnect = TLT.CL.LT[indexCorners];
-                    for (int j = 0; j < (edgesToConnect.Length - 1); j++)
-                    {
-                        trianglesList.Add(edgesToConnect[j]);
-                    }
+                    activeCorners = string.Empty;
 
-                }
-            }
+                    // print(indexCorners);
+                    trianglesList.Add(TLT.CL.LT[indexCorners]);
+
+
+                 }
+             }
         }
-        // triangles = new int[vertices.Length * 6];
-        // todo t rianglesList -> triangles
-        triangles = new int[trianglesList.Count];
-        triangles = trianglesList.ToArray();
-
-
 
 
     }
@@ -132,6 +126,8 @@ public class MeshGen3D : MonoBehaviour
 
     void UpdateMesh()
     {
+        triangles = new int[trianglesList.Count];
+        triangles = trianglesList.ToArray();
         mesh.Clear();
 
         mesh.vertices = vertices;
