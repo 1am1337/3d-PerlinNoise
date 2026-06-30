@@ -82,11 +82,11 @@ public class MeshGen3D : MonoBehaviour
 
         cubePoints = new int[8];
         activeCorners = string.Empty;
-        for (int x = 0; x <= xSize; x++)
+        for (int x = 0; x <= xSize-1; x++)
         {
-            for (int y = 0; y <= ySize; y++)
+            for (int y = 0; y <= ySize-1; y++)
             {
-                for (int z = 0; z <= zSize; z++)
+                for (int z = 0; z <= zSize-1; z++)
                 {
                     cubePoints[0] = IndexOf(vertices, new Vector3(x, y, z));
                     cubePoints[1] = IndexOf(vertices, new Vector3(x + 1, y, z));
@@ -108,12 +108,16 @@ public class MeshGen3D : MonoBehaviour
                             activeCorners += "0";
                         }
                     }
-                    // print(activeCorners);
-                    indexCorners = Convert.ToInt32(activeCorners, 2);
-                    activeCorners = string.Empty;
 
-                    // print(indexCorners);
-                    trianglesList.Add(TLT.CL.LT[indexCorners]);
+                    indexCorners = Convert.ToInt32(activeCorners, 2);
+                    activeCorners = string.Empty;  // reset activeCorners
+
+                    foreach (int coordinate in TLT.CL.LT[indexCorners]){
+                        if (coordinate != -1){
+                            trianglesList.Add(coordinate);
+                        }
+
+                    }
 
 
                  }
@@ -128,6 +132,9 @@ public class MeshGen3D : MonoBehaviour
     {
         triangles = new int[trianglesList.Count];
         triangles = trianglesList.ToArray();
+        foreach (int triangle in triangles){
+            print(triangle);
+        }
         mesh.Clear();
 
         mesh.vertices = vertices;
